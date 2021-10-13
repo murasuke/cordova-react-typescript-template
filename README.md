@@ -1,46 +1,110 @@
-# Getting Started with Create React App
+# Create React App & Cordovaでアプリをつくる(2021年時点)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+下記ページを参考に、2021年10月時点のCreate React Appで環境作成する手順を記載します。
+https://qiita.com/bathtimefish/items/113154e89650b351b5b7
 
-## Available Scripts
 
-In the project directory, you can run:
+## 概要手順
 
-### `npm start`
+* react用フォルダと、cordova用フォルダを並列で作成する
+* cordova用フォルダから、config.xmlをreact用フォルダにコピーする
+* reactのビルド対象フォルダを「build」⇒「www」に変更する
+* reactの「public/index.html」ファイルに3行&lt;meta&gt;タグを追加する
+* reactの「src/index.ts」を変更する。
+* reactをビルドしてから、`cordova run browser`で実行する
+## 手順
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+cordovaをグローバルインストールします(ローカルインストールだと動きません)
+```bash
+npm install -g cordova
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+craでreactアプリを作成する
+```bash
+create-react-app tutorial --template typescript --use-npm
+```
 
-### `npm test`
+Cordova プロジェクトを作成する
+```
+cordova create tutorial-cordova com.example.tutorial Tutorial
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+tutorial-corodova/config.xml を tutorial 下にコピーする
+```
+cp ./tutorial-cordova/config.xml ./tutorial/
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+reactビルド先フォルダを変更する(build⇒www)
+https://stackoverflow.com/questions/41495658/use-custom-build-output-folder-when-using-create-react-app
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+windows用(cmd)の記載方法です。(gitbashを利用している場合も内部コマンドはcmd.exeのため、この書き方です)
+* `&&`の前後にスペースを入れないこと。スペースを含む不正なパスになり、エクスプローラーから削除できなくなります。
+```json
+  "scripts": {
+    "build": "set BUILD_PATH=www&&react-scripts build",
+  }
+```
+windows以外の場合は、下記の通りだと思いますが未検証です。
+```json
+  "scripts": {
+    "build": "BUILD_PATH='./www' react-scripts build",
+  }
+```
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+public/index.html の &lt;head&gt;内に下記を追加する。
+```
+  <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src * data: content:;">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="msapplication-tap-highlight" content="no">
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+tutorial/src/index.js を開いて以下のように編集する
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+変更前
+```tsx
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+);
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+変更後
+```tsx
+const startApp = () => {
+  ReactDOM.render(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>,
+    document.getElementById("root")
+  );
+};
 
-## Learn More
+if ((window as any).cordova) {
+  document.addEventListener("deviceready", startApp, false);
+} else {
+  startApp();
+}
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+reactをビルドする
+```bash
+npm run build
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+プラットフォームを追加
+```bash
+cordova platforms add browser
+cordova platforms add android
+```
+
+cordovaプロジェクトを実行
+```bash
+cordova run browser
+```
+
+localhost:8000でReactアプリが開きます
