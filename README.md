@@ -3,6 +3,10 @@
 下記ページを参考に、2021年10月時点のCreate React Appで環境作成する手順を記載します。
 https://qiita.com/bathtimefish/items/113154e89650b351b5b7
 
+実機デバッグのやり方までたどりつくのに、かなり試行錯誤が必要でした。
+
+作成ソース
+https://github.com/murasuke/cordova-react-typescript-template
 
 ## 概要手順
 * ①cordova環境でreact動作確認(ブラウザ)
