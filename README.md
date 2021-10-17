@@ -470,3 +470,15 @@ cordova run android --target=b764afd4
 
   ![chrome-inlinemap](./img/chrome-inlinemap.png)
 
+
+
+## おまけ
+
+`Error: No Java files found which extend CordovaActivity.`
+というエラーが発生した場合の対処方法
+
+```
+cordova platform rm android
+cordova platform add android
+```
+  * config.xml を変更した場合に起きるようです。その場合、上記のコマンドでなおります。
