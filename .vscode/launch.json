@@ -1,0 +1,39 @@
+{
+  "configurations": [
+    {
+      "name": "Run Browser",
+      "type": "cordova",
+      "request": "launch",
+      "platform": "browser",
+      "target": "chrome",
+      "simulatePort": 8000,
+      "livereload": true,
+      "cwd": "${workspaceFolder}",
+      "sourceMaps": true
+    },
+    {
+      "name": "Run Android on emulator",
+      "type": "cordova",
+      "request": "launch",
+      "platform": "android",
+      "target": "emulator",
+      "port": 9222,
+      "sourceMaps": true,
+      "cwd": "${workspaceFolder}"
+    },
+
+
+    {
+      "name": "Run Android on device",
+      "type": "cordova",
+      "request": "launch",
+      "platform": "android",
+      "target": "device",
+      "port": 9222,
+      "sourceMaps": true,
+      "cwd": "${workspaceFolder}"
+    }
+
+
+  ]
+}
