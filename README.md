@@ -57,7 +57,19 @@ Cordova プロジェクトを作成する
 cordova create hello-cordova com.example.cordova hello-cordova
 ```
 
-  * `hello-cordova-react`フォルダと、`hello-cordova`フォルダが同一フォルダに入っている状態
+下記のメッセージが出た場合 `cordova telemetry on`を実行してから、Cordova プロジェクトを作成する。
+```
+You have been opted out of telemetry. To change this, run: cordova telemetry on.
+Creating a new cordova project.
+```
+
+  * `hello-cordova-react`フォルダと、`hello-cordova`フォルダが同一フォルダに入っている状態になっていることを確認
+```
+$ ll
+total 4
+drwxr-xr-x 1 c480 1049089 0 Oct 18 16:37 hello-cordova/
+drwxr-xr-x 1 c480 1049089 0 Oct 18 16:25 hello-cordova-react/
+```
 
 ### cordova用フォルダから、config.xmlをreact用フォルダにコピーする
 
@@ -84,7 +96,7 @@ windows以外の場合は、下記の通りだと思いますが未検証です�
   }
 ```
 
-package.jsonに下記を追加
+package.jsonに下記を追加("private"の次行)
 
 ```
   "homepage": ".",
@@ -186,12 +198,12 @@ export default App;
 ```
 ### reactをビルドしてから、`cordova run browser`で実行する
 
-reactをビルドする(`www`フォルダに配置されます)
+hello-cordova-reactフォルダに移行後、reactをビルドする(`www`フォルダに配置されます)  
 ```bash
 npm run build
 ```
 
-プラットフォームを追加
+プラットフォームを追加(hello-cordova-reactフォルダ)
 ```bash
 cordova platforms add browser
 cordova platforms add android
