@@ -49,7 +49,7 @@ npm install -g cordova
 
 craでreactアプリを作成する
 ```bash
-create-react-app hello-cordova-react --template typescript --use-npm
+npx create-react-app hello-cordova-react --template typescript --use-npm
 ```
 
 Cordova プロジェクトを作成する
