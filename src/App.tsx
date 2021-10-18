@@ -3,7 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 
 const click = () => {
-  alert('test');
+  navigator.vibrate(1000);
+  // alert('test');
 };
 
 function App() {

@@ -35,6 +35,10 @@ https://github.com/murasuke/cordova-react-typescript-template
   1. package.jsonの`devDependencies`に`rewire`を追加
   1. package.jsonの`scripts`に、ビルド用スクリプトを追加
   1. プロジェクト直下に`build.js`を作成し、ビルド設定を上書きする
+* ⑥Cordova pluginを利用する(`cordova-plugin-vibration`)
+  1. pluginを追加
+  1. pluginを利用する
+
 
 <p style="color:hotpink;">Emulatorでの確認はしていません。ディスク空き容量の関係で構築できなかったためです</p>
 
@@ -198,7 +202,7 @@ export default App;
 ```
 ### reactをビルドしてから、`cordova run browser`で実行する
 
-hello-cordova-reactフォルダに移行後、reactをビルドする(`www`フォルダに配置されます)  
+hello-cordova-reactフォルダに移行後、reactをビルドする(`www`フォルダに配置されます)
 ```bash
 npm run build
 ```
@@ -494,3 +498,48 @@ cordova platform rm android
 cordova platform add android
 ```
   * config.xml を変更した場合に起きるようです。その場合、上記のコマンドでなおります。
+
+##  ⑥Cordova pluginを利用する(`cordova-plugin-vibration`)
+
+### pluginを追加
+
+端末を振動させるプラグインを追加します。
+
+```
+cordova plugin add cordova-plugin-vibration
+```
+
+### pluginを利用する
+
+App.tsxを修正。ボタンクリック時、端末を1秒振動させます。
+
+```tsx
+import React from 'react';
+import logo from './logo.svg';
+import './App.css';
+
+const click = () => {
+  navigator.vibrate(1000);
+  // alert('test');
+};
+
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <button onClick={click}>click</button>
+      </header>
+    </div>
+  );
+}
+
+export default App;
+```
+
+ビルド後に再度実行します。ボタンクリック時に、端末が1秒間ブルブルすれば成功です。
+
+```
+npm run build-inlinemap
+cordova run android --target=<デバイスのID>
+```

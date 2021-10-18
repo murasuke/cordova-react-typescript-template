@@ -45,12 +45,16 @@
   "devDependencies": {
     "cordova-android": "^9.1.0",
     "cordova-browser": "^6.0.0",
+    "cordova-plugin-vibration": "^3.1.1",
     "rewire": "^5.0.0"
   },
   "cordova": {
     "platforms": [
       "browser",
       "android"
-    ]
+    ],
+    "plugins": {
+      "cordova-plugin-vibration": {}
+    }
   }
 }
