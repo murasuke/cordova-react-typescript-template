@@ -246,7 +246,7 @@ localhost:8000でReactアプリが開きます。
 
 ### [Gracle(ビルド自動化システム)](https://gradle.org/install/)のインストール
 
-Java JDK version 8 以降が必要なため、下記コマンドで確認する。未導入の場合は[https://adoptopenjdk.net/](https://adoptopenjdk.net/)からダウンロードしてインストールを行う。
+Java JDK version 8 が必要なため、下記コマンドで確認する。未導入の場合は[https://adoptopenjdk.net/](https://adoptopenjdk.net/)からOpenJDK8をダウンロードしてインストールする。
 ```
 $ java -version
 java version "1.8.0_121"
@@ -337,8 +337,6 @@ cordovaは、下記2ファイルが存在する前提でビルドを行おうと
 
 
 * 対応方法 - SDK Build-tool 30を導入し、必要なファイルをコピーする
-
-
 
 Android studio の SDK ManagerのSDK Toolsから「Android SDK Build-tool 30.0.3」を導入
   * `Show Package Details`をチェック
