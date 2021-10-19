@@ -246,7 +246,13 @@ localhost:8000でReactアプリが開きます。
 
 ### [Gracle(ビルド自動化システム)](https://gradle.org/install/)のインストール
 
-ダウンロード後、任意のフォルダに解凍して、Gradleのbinフォルダのパスを環境変数`path`に追加します。
+Java JDK version 8 以降が必要なため、下記コマンドで確認する。未導入の場合は[https://adoptopenjdk.net/](https://adoptopenjdk.net/)からダウンロードしてインストールを行う。
+```
+$ java -version
+java version "1.8.0_121"
+```
+
+Gracleをダウンロード後、任意のフォルダに解凍して、Gradleのbinフォルダのパスを環境変数`path`に追加します。
 
   ![env-path-gradle](./img/env-path-gradle.png)
 
