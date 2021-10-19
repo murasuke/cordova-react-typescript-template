@@ -18,7 +18,10 @@ https://github.com/murasuke/cordova-react-typescript-template
   1. reactをビルドしてから、`cordova run browser`で実行する
 * ②android用モジュールのビルド
   1. Android Studioのインストール
+  1. JDK8をインストール
   1. Gradle(ビルド自動化システム)のインストール
+  1. ビルドに必要な環境がそろっているか`cordova requirements`で確認
+  1. Andoroid向けにビルドを行う (失敗します・・・)
   1. ビルドエラーの対処① (メモリ不足エラー)
   1. ビルドエラーの対処② (SDK Build-tool に不足しているファイルへの対処)
   1. ビルドが正常終了することを確認
@@ -244,28 +247,69 @@ localhost:8000でReactアプリが開きます。
 
   ![env-path-sdk](./img/env-path-sdk.png)
 
-### [Gracle(ビルド自動化システム)](https://gradle.org/install/)のインストール
+### JDK8をインストール
 
-Java JDK version 8 が必要なため、下記コマンドで確認する。未導入の場合は[https://adoptopenjdk.net/](https://adoptopenjdk.net/)からOpenJDK8をダウンロードしてインストールする。
+* Java JDK のバージョンを確認
+
 ```
 $ java -version
 java version "1.8.0_121"
 ```
+  version 8(1.8) がインストール済みの場合は、次へ進みます。
 
-環境変数`JAVA_HOME`を設定する(jdkインストールフォルダ)
+  Version 8以降がインストールされている場合はアンインストールして、OpenJDK8をインストールします。
 
+  未導入の場合は[https://adoptopenjdk.net/](https://adoptopenjdk.net/)からOpenJDK8をダウンロードしてインストールします。
+
+* 環境変数`JAVA_HOME`を設定します(jdkインストールフォルダ)
+
+### [Gracle(ビルド自動化システム)](https://gradle.org/install/)のインストール
 
 Gracleをダウンロード後、任意のフォルダに解凍して、Gradleのbinフォルダのパスを環境変数`path`に追加します。
 
   ![env-path-gradle](./img/env-path-gradle.png)
 
-  sdkの'platform-tools'のパスも追加します。
+  Andoroid Sdkの'platform-tools'のパスも追加します。
 
-* Andoroid向けにビルドを行う (失敗します・・・)
+### ビルドに必要な環境がそろっているか`cordova requirements`で確認
+
+```
+$ cordova requirements
+
+Requirements check results for android:
+Java JDK: installed 1.8.0
+Android SDK: installed true
+Android target: not installed
+Please install Android target / API level: "android-29".
+```
+
+上記のようなメッセージが表示される場合、Android Studioから、`Android SDK Platform 29`をインストールします。
+
+Android Studioを起動し、`SDK Manager`を選択します。
+
+  ![android-studio](./img/android-studio.png)
+
+赤枠` Show Package Details`をチェックし、詳細一覧表示します。
+
+黄色枠(Android 10.0)の2つを選択して`OK`をクリックします。
+
+  ![sdk-platform](./img/sdk-platform.png)
+
+* `API level`は、`platforms/android/project.properties`ファイルで指定されている値のようです。インストールするバージョンにより異なる可能性があるので、指定されたバージョンを選択してください。
+
+```sh
+# Project target.
+target=android-29
+```
+
+### Andoroid向けにビルドを行う
 
 ```
 cordova build android
 ```
+
+**エラーが発生します。ビルドエラーの対処①、②を参照して下さい。**
+
 ### ビルドエラーの対処① (メモリ不足エラー)
 
   (環境依存かもしれません。エラーがなければ次へ進んでください)
@@ -292,7 +336,7 @@ Error occurred during initialization of VM
 Could not reserve enough space for 2097152KB object heap
 ```
 
-2GBのメモリが確保できないというエラー(OSの空きメモリは6GBあっても失敗した)
+一言にすると`2GBのメモリが確保できない`というエラー(OSの空きメモリは6GBあっても失敗した)
 
 下記ページを参考に、起動時に確保するメモリを1GBに変更します。
 
@@ -319,7 +363,7 @@ Could not reserve enough space for 2097152KB object heap
 
 ### ビルドエラーの対処② (SDK Build-tool に不足しているファイルへの対処)
 
-メモリ不足解消後、下記のエラーが発生します。
+メモリ不足を解消しても、下記のエラーが発生します。
 ```
 FAILURE: Build failed with an exception.
 
@@ -328,11 +372,11 @@ Could not determine the dependencies of task ':app:compileDebugJavaWithJavac'.
 > Installed Build Tools revision 31.0.0 is corrupted. Remove and install again using the SDK Manager.
 ```
 
-Android studioの最新版(31)から、cordovaのビルドができなくなっています。
-cordovaは、下記2ファイルが存在する前提でビルドを行おうとしますが、Ver31にはファイルがありません。
+Android studioの最新版(31)では、cordovaのビルドができない(仕様)ようです。
+cordovaは、ビルド時に下記2ファイルが必要ですが、V31には該当ファイルがありません。
 ```
-<Andorid SDK path>/build-tools/31.0.0
-<Andorid SDK path>/build-tools/31.0.0/lib/
+<Andorid SDK path>/build-tools/31.0.0/dx
+<Andorid SDK path>/build-tools/31.0.0/lib/dx.jar
 ```
 
 
