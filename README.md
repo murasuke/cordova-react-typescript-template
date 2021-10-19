@@ -252,6 +252,9 @@ $ java -version
 java version "1.8.0_121"
 ```
 
+環境変数`JAVA_HOME`を設定する(sdkインストールフォルダを設定)
+
+
 Gracleをダウンロード後、任意のフォルダに解凍して、Gradleのbinフォルダのパスを環境変数`path`に追加します。
 
   ![env-path-gradle](./img/env-path-gradle.png)
