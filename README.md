@@ -317,9 +317,9 @@ cordova build android
 ```
 $ cordova build android
 Checking Java JDK and Android SDK versions
-ANDROID_SDK_ROOT=C:\Users\t_nii\AppData\Local\Android\Sdk (recommended setting)
+ANDROID_SDK_ROOT=C:\Users\x_xxxx\AppData\Local\Android\Sdk (recommended setting)
 ANDROID_HOME=undefined (DEPRECATED)
-Using Android SDK: C:\Users\t_nii\AppData\Local\Android\Sdk
+Using Android SDK: C:\Users\x_xxxx\AppData\Local\Android\Sdk
 Starting a Gradle Daemon (subsequent builds will be faster)
 
 FAILURE: Build failed with an exception.
@@ -379,10 +379,10 @@ cordovaは、ビルド時に下記2ファイルが必要ですが、V31には該
 <Andorid SDK path>/build-tools/31.0.0/lib/dx.jar
 ```
 
+* 対応方法 - SDK Build-tool 30を導入し、そこから不足ファイルをコピーする
 
-* 対応方法 - SDK Build-tool 30を導入し、必要なファイルをコピーする
+Android studio の SDK Managerの`SDK Tools`から「`Android SDK Build-tool 30.0.3`」を導入
 
-Android studio の SDK ManagerのSDK Toolsから「Android SDK Build-tool 30.0.3」を導入
   * `Show Package Details`をチェック
   * バージョン一覧が表示されるので、`30.0.X`を選択して追加する
 
@@ -409,7 +409,24 @@ Android studio の SDK ManagerのSDK Toolsから「Android SDK Build-tool 30.0.3
 
 やっとビルドが通るようになります。
 ```
-cordova build android
+$ cordova build android
+Checking Java JDK and Android SDK versions
+ANDROID_SDK_ROOT=C:\Users\x_xxxx\AppData\Local\Android\Sdk (recommended setting)
+ANDROID_HOME=undefined (DEPRECATED)
+Using Android SDK: C:\Users\x_xxxx\AppData\Local\Android\Sdk
+Subproject Path: CordovaLib
+Subproject Path: app
+Starting a Gradle Daemon, 1 incompatible and 1 stopped Daemons could not be reused, use --status for details
+～～略～～
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 7.0.
+Use '--warning-mode all' to show the individual deprecation warnings.
+See https://docs.gradle.org/6.5/userguide/command_line_interface.html#sec:command_line_warnings
+
+BUILD SUCCESSFUL in 22s
+40 actionable tasks: 40 up-to-date
+Built the following apk(s):
+        C:\Users\x_xxxx\Documents\git\cordova\hello-cordova-react\platforms\android\app\build\outputs\apk\debug\app-debug.apk
 ```
 ## ③Android実機での実行
 
