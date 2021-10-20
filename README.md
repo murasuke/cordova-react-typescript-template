@@ -20,9 +20,9 @@ https://github.com/murasuke/cordova-react-typescript-template
   1. react用プロジェクトと、cordova用プロジェクトを作成する
   1. cordova用フォルダから、config.xmlをreact用フォルダにコピーする
   1. reactのビルドフォルダを「build」⇒「www」に変更する
-  1. reactの「public/index.html」ファイルに3行&lt;meta&gt;タグをと`cordova.js`の読み込み追加する
+  1. reactの「public/index.html」ファイルを修正。cordova化に必要な&lt;meta&gt;タグをと`cordova.js`の読み込み追加する
   1. reactの「src/index.ts」を変更する。
-  1. reactをビルドしてから、`cordova run browser`で実行する
+  1. reactをビルドしてから、`cordova run browser`で動作確認を行う
 * ②android用モジュールのビルド
   1. Android Studioのインストール
   1. JDK8をインストール
@@ -116,7 +116,7 @@ package.jsonに下記を追加("private"の次行)
   "homepage": ".",
 ```
 
-### reactの「public/index.html」ファイルに3行&lt;meta&gt;タグをと`cordova.js`の読み込み追加する
+### reactの「public/index.html」ファイルを修正。cordova化に必要な&lt;meta&gt;タグをと`cordova.js`の読み込み追加する
 
 `public/index.html` の &lt;head&gt;内に下記を追加する。
 ```
@@ -210,7 +210,7 @@ function App() {
 
 export default App;
 ```
-### reactをビルドしてから、`cordova run browser`で実行する
+### reactをビルドしてから、`cordova run browser`で動作確認を行う
 
 hello-cordova-reactフォルダに移行後、reactをビルドする(`www`フォルダに配置されます)
 ```bash
