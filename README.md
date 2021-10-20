@@ -242,6 +242,8 @@ localhost:8000でReactアプリが開きます。
 
 ### [android studio](https://developer.android.com/studio?hl=ja) のインストール
 
+2021/10時点では`Android Studio(2020.3.1)`です。
+
 ([インストール手順](https://developer.android.com/studio/install?hl=ja))
 
   SDKのインストールパスを確認するため`Android Studio`を起動します。
