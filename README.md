@@ -297,6 +297,20 @@ Android Studioを起動し、`SDK Manager`を選択します。
 
 * `API level`は、`platforms/android/project.properties`ファイルで指定されている値のようです。インストールするバージョンにより異なる可能性があるので、指定されたバージョンを選択してください。
 
+再度確認します。エラーが出ていないので、ビルドが可能になりました。
+
+```
+$ cordova requirements
+
+Requirements check results for android:
+Java JDK: installed 1.8.0
+Android SDK: installed true
+Android target: installed android-31,android-29
+Gradle: installed D:\tools\gradle-6.9.1\bin\gradle.BAT
+
+Requirements check results for browser:
+```
+
 ```sh
 # Project target.
 target=android-29
@@ -363,7 +377,7 @@ Could not reserve enough space for 2097152KB object heap
 
 ### ビルドエラーの対処② (SDK Build-tool に不足しているファイルへの対処)
 
-メモリ不足を解消しても、下記のエラーが発生します。
+Android Studio(2020.3.1)では、ビルド時に下記エラーが発生します。
 ```
 FAILURE: Build failed with an exception.
 
@@ -372,8 +386,8 @@ Could not determine the dependencies of task ':app:compileDebugJavaWithJavac'.
 > Installed Build Tools revision 31.0.0 is corrupted. Remove and install again using the SDK Manager.
 ```
 
-Android studioの最新版(31)では、cordovaのビルドができない(仕様)ようです。
-cordovaは、ビルド時に下記2ファイルが必要ですが、V31には該当ファイルがありません。
+Android Studio(2020.3.1)では、cordovaのビルドができない(仕様)ようです。
+cordovaは、ビルド時に下記2ファイルが必要ですが、/build-tools/31.0.0/には該当ファイルがありません。
 ```
 <Andorid SDK path>/build-tools/31.0.0/dx
 <Andorid SDK path>/build-tools/31.0.0/lib/dx.jar
