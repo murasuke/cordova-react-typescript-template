@@ -1,7 +1,9 @@
 # Create React App(TypeScript) & Cordovaでアプリをつくる(2021年10月版)
 
 下記ページを参考に、2021年10月時点のCreate React Appで環境作成する手順を記載します。
-2021年時点では、参考ページの手順通りにやってもcordovaのビルドが失敗します。かなりの試行錯誤が必要ですので、今後のために手順をまとめました。
+2021年時点では、参考ページの手順通りにやっても、環境の問題でcordovaのビルド失敗します。
+
+ビルドが成功するまでにはかなりの試行錯誤が必要でしたので、手順をまとめました。
 https://qiita.com/bathtimefish/items/113154e89650b351b5b7
 https://qiita.com/hal_sk/items/cdc459fd639a736bccc3
 
