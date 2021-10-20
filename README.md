@@ -18,8 +18,10 @@
 ## 前提
 
 * create-react-app を使い、ビルド、実行、パッケージの追加ができること
+* Windows10で確認しています。
 
-作成ソース
+## 作成したソース一式
+
 https://github.com/murasuke/cordova-react-typescript-template
 
 ## 概要手順
