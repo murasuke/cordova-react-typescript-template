@@ -11,6 +11,9 @@ https://qiita.com/hal_sk/items/cdc459fd639a736bccc3
 
 * Cordova＋Reactでアプリを作成し、Android実機上でTypeScriptのデバッグが可能な環境を作成する。
 
+## 前提
+
+* create-react-app を使い、ビルド、実行、パッケージの追加ができること
 
 作成ソース
 https://github.com/murasuke/cordova-react-typescript-template
