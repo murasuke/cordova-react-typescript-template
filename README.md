@@ -4,8 +4,12 @@
 2021年時点では、参考ページの手順通りにやっても、環境の問題でcordovaのビルド失敗します。
 
 ビルドが成功するまでにはかなりの試行錯誤が必要でしたので、手順をまとめました。
-https://qiita.com/bathtimefish/items/113154e89650b351b5b7
-https://qiita.com/hal_sk/items/cdc459fd639a736bccc3
+
+* 参考ページ
+
+  https://qiita.com/bathtimefish/items/113154e89650b351b5b7
+  
+  https://qiita.com/hal_sk/items/cdc459fd639a736bccc3
 
 ## 目的
 
