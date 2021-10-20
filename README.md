@@ -415,7 +415,7 @@ Android studio の SDK Managerの`SDK Tools`から「`Android SDK Build-tool 30.
 コピー元
 
 ```
-<Andorid SDK path>/build-tools/30.0.3/dx
+<Andorid SDK path>/build-tools/30.0.3/dx.bat
 <Andorid SDK path>/build-tools/30.0.3/lib/dx.jar
 ```
 
