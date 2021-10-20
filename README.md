@@ -1,4 +1,4 @@
-# Create React App(TypeScript) & Cordovaでアプリをつくる(2021年10月版)
+# Cordova & React(TypeScript)環境構築＆デバッグ手順 (2021年10月時点)
 
 2021年10月時点で **Create React App(TypeScript) & Cordova** の環境作成とデバッグを行う手順を記載します。
 参考ページの手順通りにやっても、cordovaのビルドに失敗します(環境の問題)。
