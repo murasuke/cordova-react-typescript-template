@@ -1,32 +1,34 @@
-# Cordova & React(TypeScript)環境構築＆デバッグ手順 (2021年10月時点)
+# Cordova & React & TypeScript 環境構築＆デバッグ手順 (2021年10月時点)
 
-2021年10月時点で **Create React App(TypeScript) & Cordova** の環境作成とデバッグを行う手順を記載します。
+2021年10月時点で ** Cordova & React & TypeScript ** の環境作成とデバッグを行う手順です。
 
-参考ページの手順通り進めても、環境の問題でcordovaのビルドに失敗します。
+参考ページの手順は古くなっており、2021年10月時点では環境の問題でビルドができません。
 
 ビルドが成功するまでにはかなりの試行錯誤が必要でしたので、後学のために手順をまとめています。
 
 * Cordova環境作成 参考ページ
 
   https://qiita.com/bathtimefish/items/113154e89650b351b5b7
-  
+
   https://qiita.com/hal_sk/items/cdc459fd639a736bccc3
 
 ## 目的
 
-* Cordova＋Reactでアプリを作成し、Android実機上でTypeScriptのデバッグが可能な環境を作成する。
+* Cordova＋Reactでアプリを作成し、Android実機上でTypeScriptのデバッグを行う。
 
 ## 前提
 
 * create-react-app を使い、ビルド、実行、パッケージの追加ができること
 * Windows10
 
+  * Macは簡単にできるそうです。
+
 ## 作成したソース一式
 
-https://github.com/murasuke/cordova-react-typescript-template
+  https://github.com/murasuke/cordova-react-typescript-template
 
 ## 概要手順
-* ①cordova環境でreact動作確認(ブラウザ)
+* ①cordova環境でreactの動作確認を行う(ブラウザ)
   1. react用プロジェクトと、cordova用プロジェクトを作成する
   1. cordova用フォルダから、config.xmlをreact用フォルダにコピーする
   1. reactのビルドフォルダを「build」⇒「www」に変更する
@@ -44,14 +46,14 @@ https://github.com/murasuke/cordova-react-typescript-template
   1. ビルドが正常終了することを確認
 * ③Android実機での実行
   1. Android端末の「USBデバッグ」を有効にする
-  1. USBでAndroid端末を接続する
+  1. PCとAndroid端末をUSBで接続する
   1. 接続したAndroid端末が、cordova側から認識されていることを確認
   1. 実機でアプリを実行する
-* ④Androidでデバッグ実行 (soucemapを手動読み込み)
+* ④Androidでアプリをデバッグ実行 (soucemapを手動読み込み)
   1. 実機でアプリを実行する
   1. PCのChromeからリモートデバッグを行う
-  1. TypeScriptソースでデバッグを可能にするためsourcemapを追加
-* ⑤create-react-appのビルド設定を変更('inline-source-map')し、sourcemapの手動読み込みを不要にする
+  1. TypeScriptソースでのデバッグを可能にするためsourcemapを追加
+* ⑤create-react-appのビルド設定を変更し、sourcemapの手動読み込みを不要にする
   1. package.jsonの`devDependencies`に`rewire`を追加
   1. package.jsonの`scripts`に、ビルド用スクリプトを追加
   1. プロジェクト直下に`build.js`を作成し、ビルド設定を上書きする
@@ -62,7 +64,7 @@ https://github.com/murasuke/cordova-react-typescript-template
 
 <p style="color:hotpink;">Emulatorでの確認はしていません。ディスク空き容量の関係で構築できなかったためです</p>
 
-## 手順(①cordova環境でreactを動作させる)
+## ①cordova環境でreactの動作確認を行う(ブラウザ)
 
 ### react用プロジェクトと、cordova用プロジェクトを作成する
 
@@ -244,7 +246,7 @@ localhost:8000でReactアプリが開きます。
 ![run-in-browser](./img/run-in-browser.png)
 
 ---
-## ②android実機で動作確認
+## ②android用モジュールのビルド
 
 
 ### [android studio](https://developer.android.com/studio?hl=ja) のインストール
@@ -467,7 +469,9 @@ Built the following apk(s):
 
   https://developer.android.com/studio/debug/dev-options?hl=ja
 
-### Android端末とPCをUSBで接続する
+### PCとAndroid端末をUSBで接続する
+
+許可を求めるダイアログが出た場合はOKをクリック。
 
 ### 接続したAndroid端末が、cordova側から認識されていることを確認する
 
@@ -479,7 +483,7 @@ Available android virtual devices:
 Android_Accelerated_x86_Oreo
 pixel_2_pie_9_0_-_api_28
 ```
-`Available android devices:`の直下に表示されていれば認識されています。
+接続しているAndroid端末は`Available android devices:`の直下に表示されます。
 
 ### 実機でアプリを実行する
 
@@ -490,15 +494,21 @@ $ cordova run android --target=b764afd4
 
 ## ④Androidでアプリをデバッグ実行 (soucemapを手動読み込み)
 
-USBで接続しておく
+TypeScriptを利用している場合、デバッグ時にSourceMapが必要です。
+
+(コンパイル後のJavaScriptソース位置から、コンパイル前のTypeScriptソース位置を割り出すために必要な情報。デバッグ時に、TypeScriptのコードを利用できるようになる。)
+
+
 ###  実機でアプリを実行する
 
-下記コマンドで接続されているAndroid端末を確認する
+* 下記コマンドで接続されているAndroid端末を確認する
+
 ```
 $ cordova run --list
 ```
 
-Android端末で実行する
+* Android端末で実行する
+
 ```
 $ cordova run android --target=b764afd4
 ```
@@ -513,17 +523,17 @@ chrome://inspect/#devices
 
   ![chrome-devices](./img/chrome-devices.png)
 
-  Remote Targetに「WebView in 【アプリ名】」と表示されます
+  USBデバッグを有効にした端末のアプリが、Remote Targetに「WebView in 【アプリ名】」と表示されます
 
   `inspect`をクリックして、リモートデバッグを開始します。
 
   * この時点ではsourcemapが読み込まれないため、TypeScriptソースでのデバッグができません。(コンパイル後jsソースでしかデバッグができない)
 
-## TypeScriptソースでデバッグを可能にするためsourcemapを追加
+## TypeScriptソースでのデバッグを可能にするためsourcemapを追加
 
-  * このような場合、DevToolにsourcemapを読み込ませることで、デバッグを行うことができます。
+  * Chrome DevToolにsourcemapを読み込ませることで、コンパイル前のTypeScriptソースでデバッグを行うことができます。
 
-  1. 「Source」タブ⇒「FileSystem」の「Add folder to workspace」で、ローカルPCの「www」(reactのビルドファイル保存フォルダ)を選択(～.js.map というファイル名がsourcemapです)
+  ###「Source」タブ⇒「FileSystem」の「Add folder to workspace」で、ローカルPCの「www」(reactのビルドファイル保存フォルダ)を選択(～.js.map というファイル名がsourcemapです)
 
   ![chrome-filesystem](./img/chrome-filesystem.png)
 
@@ -531,11 +541,11 @@ chrome://inspect/#devices
 
   ![chrome-add-map](./img/chrome-add-map.png)
 
-  2. 次に「Page」タブを開き、「Source map detected」というメッセージを右クリックして、ソースマップを追加する
+  ### 次に「Page」タブを開き、「Source map detected」というメッセージを右クリックして、ソースマップを追加する
 
   ![chrome-add-map2](./img/chrome-add-map2.png)
 
-  3. DevToolにTypeScriptソースが追加され、デバッグできるようになる
+  ### DevToolにTypeScriptソースが追加され、デバッグできるようになる
 
     スマホ側で`click`ボタンを押すと、ブレークポイント(6行目)で止まります。
 
@@ -545,12 +555,14 @@ chrome://inspect/#devices
   毎回sourcemapを指定するのは大変なため、reactのビルド設定を見直して、sourcemapをinline化します</p>
 
 
-## create-react-appのビルド設定を変更('inline-source-map')し、sourcemapの手動読み込みを不要にする
+## ⑤create-react-appのビルド設定を変更し、sourcemapの手動読み込みを不要にする
 
+SourceMapをインライン化(JavaScriptソースの最後に追加)します。そのためには、webpackのビルド設定の変更を行う必要があります。
+通常はejectしてからwebpackの設定を変えますが、
 [rewire](https://github.com/jhnns/rewire) を使うと、eject無しでwebpackのビルド設定を上書きできます。
 
 
-production buildを行う際、source mapを`inline-source-map`(jsソース自体に埋め込む)設定にします。
+* production buildを行う際、source mapを`inline-source-map`(jsソース自体に埋め込む)設定にします。
 
 ### package.jsonの`devDependencies`に`rewire`を追加
 
@@ -563,6 +575,8 @@ production buildを行う際、source mapを`inline-source-map`(jsソース自�
 ```json
 "build-inlinemap": "set BUILD_PATH=www&&node ./build.js",
 ```
+
+通常の`build`とは別に、SourceMapをインライン化するビルドスクリプトを追加します。
 
 ### プロジェクト直下に`build.js`を作成し、ビルド設定を上書きする
 
