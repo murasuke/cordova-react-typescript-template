@@ -49,14 +49,14 @@
   1. PCとAndroid端末をUSBで接続する
   1. 接続したAndroid端末が、cordova側から認識されていることを確認
   1. 実機でアプリを実行する
-* ④Androidでアプリをデバッグ実行 (soucemapを手動読み込み)
+* ④Androidでアプリをデバッグ実行 (DevToolsから手動でSoucemapを読み込む)
   1. 実機でアプリを実行する
   1. PCのChromeからリモートデバッグを行う
-  1. TypeScriptソースでのデバッグを可能にするためsourcemapを追加
-* ⑤create-react-appのビルド設定を変更し、sourcemapの手動読み込みを不要にする
-  1. package.jsonの`devDependencies`に`rewire`を追加
-  1. package.jsonの`scripts`に、ビルド用スクリプトを追加
-  1. プロジェクト直下に`build.js`を作成し、ビルド設定を上書きする
+  1. TypeScriptソースのデバッグを可能にするため、手動でsourcemapを読み込む
+* ⑤create-react-appのビルド設定を変更し、sourcemapをインライン化する(手動読み込み不要)
+  1. webpackの設定を変更するため、[rewire](https://www.npmjs.com/package/rewire)を追加する
+  1. プロジェクト直下に`build.js`を作成し、webpackの設定を変更するスクリプトを記載する
+  1. package.jsonの`scripts`に、ビルド用スクリプトを追加する
 * ⑥Cordova pluginを利用する(`cordova-plugin-vibration`)
   1. pluginを追加
   1. pluginを利用する
@@ -137,7 +137,7 @@ package.jsonに下記を追加("private"の次行)
   <meta name="msapplication-tap-highlight" content="no">
 ```
 
-&lt;/body&gt;の直後の下記を追加
+&lt;/body&gt;の直前にcorodova.jsの読み込みを追加。(直後にするとreactのスクリプトより後に読み込まれるため初期化が正しくできない)
 ```
   <script type="text/javascript" src="cordova.js"></script>
 ```
@@ -164,8 +164,8 @@ package.jsonに下記を追加("private"の次行)
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <script type="text/javascript" src="cordova.js"></script>
   </body>
-  <script type="text/javascript" src="cordova.js"></script>
 </html>
 ```
 
@@ -555,7 +555,7 @@ chrome://inspect/#devices
   毎回sourcemapを指定するのは大変なため、reactのビルド設定を見直して、sourcemapをinline化します</p>
 
 
-## ⑤create-react-appのビルド設定を変更し、sourcemapの手動読み込みを不要にする
+## ⑤create-react-appのビルド設定を変更し、sourcemapをインライン化する(手動読み込み不要)
 
 SourceMapをインライン化(JavaScriptソースの最後に追加)します。そのためには、webpackのビルド設定の変更を行う必要があります。
 通常はejectしてからwebpackの設定を変えますが、
@@ -564,21 +564,16 @@ SourceMapをインライン化(JavaScriptソースの最後に追加)します�
 
 * production buildを行う際、source mapを`inline-source-map`(jsソース自体に埋め込む)設定にします。
 
-### package.jsonの`devDependencies`に`rewire`を追加
+### webpackの設定を変更するため、[rewire](https://www.npmjs.com/package/rewire)を追加する
 
 ```sh
   npm i -D rewire
 ```
 
-### package.jsonの`scripts`に、ビルド用スクリプトを追加
-
-```json
-"build-inlinemap": "set BUILD_PATH=www&&node ./build.js",
-```
 
 通常の`build`とは別に、SourceMapをインライン化するビルドスクリプトを追加します。
 
-### プロジェクト直下に`build.js`を作成し、ビルド設定を上書きする
+### プロジェクト直下に`build.js`を作成し、webpackの設定を変更するスクリプトを記載する
 
 ```javascript
 const rewire = require('rewire');
@@ -589,6 +584,13 @@ config.devtool = 'inline-source-map';
 ```
 
 ビルドスクリプトから`config`オブジェクトを取り出して、`devtool`プロパティーを`inline-source-map`に変更します。(変更前は`cheap-module-source-map`がセットされています)
+
+
+### package.jsonの`scripts`に、ビルド用スクリプトを追加
+
+```json
+"build-inlinemap": "set BUILD_PATH=www&&node ./build.js",
+```
 
 ### ビルドを行い結果を確認
 
