@@ -284,9 +284,9 @@ java version "1.8.0_121"
 
 * 環境変数`JAVA_HOME`を設定します(jdkインストールフォルダ)
 
-### [Gracle(ビルド自動化システム)](https://gradle.org/install/)のインストール
+### [Gradle(ビルド自動化システム)](https://gradle.org/install/)のインストール
 
-Gracleをダウンロード後、任意のフォルダに解凍して、Gradleのbinフォルダのパスを環境変数`path`に追加します。
+Gradleをダウンロード後、任意のフォルダに解凍して、Gradleのbinフォルダのパスを環境変数`path`に追加します。
 
   ![env-path-gradle](./img/env-path-gradle.png)
 
